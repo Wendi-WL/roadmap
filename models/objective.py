@@ -68,7 +68,7 @@ class Objective(Achievable):
         if not isinstance(ph, (Phase)):
             raise TypeError("Objective phase should be a Phase")
         if not ph.start >= self.timeframe.start or not ph.end <= self.timeframe.end:
-            raise ValueError("Objective phase must have a timeframe within the objective timeframe")
+            raise ValueError("Objective phase must have a Timeframe within the objective timeframe")
         if ph.name in self.get_phases_names():
             raise ValueError("Objective phases must have unique names")
         else: 

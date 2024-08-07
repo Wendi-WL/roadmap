@@ -128,11 +128,11 @@ def test_create_phase_valueerror(obj):
     p_start_out_of_range = Phase("end out of range phase", d5, d1)
     with pytest.raises(ValueError) as excinfo:  
         obj.create_phase(p_start_out_of_range)
-    assert str(excinfo.value) == "Objective phase must have a timeframe within the objective timeframe" 
+    assert str(excinfo.value) == "Objective phase must have a Timeframe within the objective timeframe" 
     p_end_out_of_range = Phase("end out of range phase", d1, d4)
     with pytest.raises(ValueError) as excinfo:  
         obj.create_phase(p_end_out_of_range)
-    assert str(excinfo.value) == "Objective phase must have a timeframe within the objective timeframe" 
+    assert str(excinfo.value) == "Objective phase must have a Timeframe within the objective timeframe" 
     p_dupe = Phase("test phase", d1, d3)
     with pytest.raises(ValueError) as excinfo:  
         obj.create_phase(p_dupe)
