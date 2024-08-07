@@ -33,12 +33,16 @@ class Objective(Achievable):
         self._timeframe = tf 
 
     def get_categories_names(self):
+        """Returns a list of strings that provide the names of the Categories of the Objective"""
+
         cats_list = []
         for cat in self._categories:
             cats_list.append(cat.name)
         return cats_list
 
     def create_category(self, cat):
+        """Adds a Category to the list of Categories, not allowing different objects with duplicate names"""
+
         if not isinstance(cat, (Category)):
             raise TypeError("Objective category should be a Category")
         if cat.name in self.get_categories_names(): 
@@ -51,12 +55,16 @@ class Objective(Achievable):
             self._categories.remove(cat)
 
     def get_phases_names(self):
+        """Returns a list of strings that provide the names of the Phases in the Objective"""
+
         phs_list = []
         for ph in self._phases:
             phs_list.append(ph.name)
         return phs_list
 
     def create_phase(self, ph):
+        """Adds a Phase to the list of Phases, not allowing phases with duplicate names, even if they have different timeframes"""
+
         if not isinstance(ph, (Phase)):
             raise TypeError("Objective phase should be a Phase")
         if not ph.start >= self.timeframe.start or not ph.end <= self.timeframe.end:

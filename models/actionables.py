@@ -5,6 +5,8 @@ from models.achievable import Achievable
 from models.dates import Phase
 
 class Actionable(ABC):
+    """Abstract class: Actionable with a string name and a Category"""
+
     _name : str
     _category : Category
 
@@ -38,6 +40,8 @@ class Actionable(ABC):
         self._category = category
 
 class Task(Actionable):
+    """Concrete implementation of Actionable class: Task with a name, category, due date, and completion status"""
+
     _due : date
     _completed : bool
 
@@ -69,6 +73,11 @@ class Task(Actionable):
         self._completed = completed
 
 class Goal(Actionable, Achievable):
+    """Concrete implementation of Actionable, Achievable classes: Goal with a name, category, description, progress, and phase
+    
+    Can have sub-actionables that are either Tasks or other Goals (accomplished though composite design pattern)
+    """
+
     _phase : Phase
     _subs : list[Actionable]
 
@@ -91,6 +100,8 @@ class Goal(Actionable, Achievable):
         self._phase = phase
 
     def get_subs_names_and_types(self):
+        """Returns a list of strings that provide the type of sub-actionable and its name"""
+
         subs_list = []
         for sub in self._subs:
             if isinstance(sub, (Goal)):
@@ -100,10 +111,12 @@ class Goal(Actionable, Achievable):
         return subs_list
 
     def add_sub(self, sub):
+        """Adds a sub-actionable to the list of subs, allowing different objects with duplicate names and types"""
+
         if not isinstance(sub, (Actionable)):
             raise TypeError("Sub-actionable should be a Goal or Task")
         if sub not in self._subs:
-            self._subs.append(sub) #allows add as long as it's a new object, even if it has same name and type
+            self._subs.append(sub) 
     
     def remove_sub(self, sub):
         if sub in self._subs:

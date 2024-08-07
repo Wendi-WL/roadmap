@@ -1,4 +1,6 @@
 class Category():
+    """Category with a name and a possible list of sub-categories"""
+
     _name : str
     _subs : list['Category']
 

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 
 class Achievable(ABC):
+    """Abstract class: Achievable with a string description and an integer progress out of 10"""
+
     _description : str
     _progress : int
     
