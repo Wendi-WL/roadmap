@@ -1,6 +1,3 @@
-from ui.roadmap import Roadmap
+from ui.gui import run_application
 
-singleton = Roadmap()
-new_singleton = Roadmap()
- 
-print(singleton is new_singleton)
+run_application()
