@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "roadmap"
+version = "0.1.0"
+description = "roadmap project tracking objectives, goals, and tasks"
+authors = ["Wendi <liu.wendi@yahoo.ca>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^8.3.2"
+pyqt6 = "^6.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
