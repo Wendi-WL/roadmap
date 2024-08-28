@@ -1,6 +1,8 @@
 from models.objective import Objective
 
 class Roadmap():
+    """Singleton class: Roadmap with a list of Objectives"""
+
     _objectives : list[Objective]
 
     def __init__(self):
@@ -12,6 +14,8 @@ class Roadmap():
         return self.instance
     
     def get_objectives_descriptions(self):
+        """Returns a list of strings containing the descriptions of the Roadmap's objectives"""
+
         objectives_list: list[Objective] = []
         for obj in self._objectives:
             objectives_list.append(obj.description)
