@@ -32,7 +32,19 @@ class Objective(Achievable):
         if not isinstance(tf, (Timeframe)):
             raise TypeError("Timeframe should be a Timeframe")
         self._timeframe = tf 
+    
+    @property
+    def categories(self):
+        return self._categories
 
+    @property
+    def phases(self):
+        return self._phases
+    
+    @property
+    def actionables(self):
+        return self._actionables
+    
     def get_categories_names(self):
         """Returns a list of strings that provide the names of the Categories of the Objective"""
 

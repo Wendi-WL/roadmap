@@ -14,7 +14,7 @@ def r():
     return Roadmap()
 
 def test_constructor(r):
-    assert r.get_objectives_descriptions() == []
+    assert r.objectives == []
 
 def test_singleton(r):
     r = Roadmap()

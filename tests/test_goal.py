@@ -21,6 +21,7 @@ def test_constructor(g):
     assert g.description == "test description"
     assert g.progress == 0
     assert g.phase == p
+    assert g.subs == []
 
 def test_constructor_typeerror():
     with pytest.raises(TypeError) as excinfo:  

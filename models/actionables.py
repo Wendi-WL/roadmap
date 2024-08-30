@@ -99,6 +99,10 @@ class Goal(Actionable, Achievable):
             raise TypeError("Phase should be a Phase")
         self._phase = phase
 
+    @property
+    def subs(self):
+        return self._subs
+
     def get_subs_names_and_types(self):
         """Returns a list of strings that provide the type of sub-actionable and its name"""
 
