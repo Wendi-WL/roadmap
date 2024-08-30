@@ -26,9 +26,9 @@ def test_constructor(obj):
     assert obj.progress == 0
     assert obj.timeframe.start == d1
     assert obj.timeframe.end == d2
-    assert obj._categories == []
-    assert obj._phases == []
-    assert obj._actionables == []
+    assert obj.categories == []
+    assert obj.phases == []
+    assert obj.actionables == []
 
 def test_constructor_same_dates():
     same_date_obj = Objective("test objective", d1, d1)
@@ -36,9 +36,9 @@ def test_constructor_same_dates():
     assert same_date_obj.progress == 0
     assert same_date_obj.timeframe.start == d1
     assert same_date_obj.timeframe.end == d1
-    assert same_date_obj._categories == []
-    assert same_date_obj._phases == []
-    assert same_date_obj._actionables == []
+    assert same_date_obj.categories == []
+    assert same_date_obj.phases == []
+    assert same_date_obj.actionables == []
 
 def test_constructor_typeerror():
     with pytest.raises(TypeError) as excinfo:  

@@ -13,6 +13,10 @@ class Roadmap():
             self.instance = super(Roadmap, self).__new__(self)
         return self.instance
     
+    @property
+    def objectives(self):
+        return self._objectives
+    
     def get_objectives_descriptions(self):
         """Returns a list of strings containing the descriptions of the Roadmap's objectives"""
 
