@@ -9,9 +9,15 @@ d2 = date(2024, 3, 4)
 d3 = date(2024, 3, 2)
 d4 = date(2024, 3, 6)
 d5 = date(2024, 2, 1)
-new_tf = Timeframe(d1, d3)
+d6 = date(2024, 3, 3)
 c = Category("test category")
 p = Phase("test phase", d1, d2)
+p_5 = Phase("1", d1, d3)
+p_4 = Phase("2", d3, d3)
+p_1 = Phase("3", d3, d6)
+p_3 = Phase("4", d3, d6)
+p_2 = Phase("5", d3, d2)
+p_6 = Phase("6", d6, d6)
 g = Goal("test goal", c, "test description", p)
 dupe_g = Goal("test goal", c, "test description", p)
 t = Task("test task", c, d3)
@@ -117,6 +123,15 @@ def test_delete_category(obj):
 def test_create_phase(obj):
     obj.create_phase(p)
     assert obj.get_phases_names() == ["test phase"]
+
+def test_create_phase_sorting(obj):
+    obj.create_phase(p_1)
+    obj.create_phase(p_2)
+    obj.create_phase(p_3)
+    obj.create_phase(p_4)
+    obj.create_phase(p_5)
+    obj.create_phase(p_6)
+    assert obj.get_phases_names() == ["1", "2", "3", "4", "5", "6"]
 
 def test_create_phase_typeerror(obj):
     with pytest.raises(TypeError) as excinfo:  
