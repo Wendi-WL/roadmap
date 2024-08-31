@@ -38,16 +38,17 @@ class Timeframe():
             raise ValueError("End date should be on or after the start date")
         self._end = end
 
-class Phase(Timeframe):
-    """Phase with a string name, a start date, and an end date"""
+class Phase():
+    """Phase with a string name and a timeframe"""
 
     _name : str
+    _timeframe : Timeframe
 
     def __init__(self, name, start, end):
         if not isinstance(name, (str)):
             raise TypeError("Name should be a string")
         self._name = name
-        super().__init__(start, end)
+        self._timeframe = Timeframe(start, end)
     
     @property
     def name(self):
@@ -58,3 +59,13 @@ class Phase(Timeframe):
         if not isinstance(name, (str)):
             raise TypeError("Name should be a string")
         self._name = name
+
+    @property
+    def timeframe(self):
+        return self._timeframe
+    
+    @timeframe.setter
+    def timeframe(self, tf):
+        if not isinstance(tf, (Timeframe)):
+            raise TypeError("Timeframe should be a Timeframe")
+        self._timeframe = tf 
