@@ -76,7 +76,11 @@ class Objective(Achievable):
         return phs_list
 
     def create_phase(self, ph):
-        """Adds a Phase to the list of Phases, not allowing phases with duplicate names, even if they have different timeframes"""
+        """Adds a Phase to the list of Phases, ordered by the following criteria:
+        - by earliest start date
+        - by earlier end date if start date is the same
+        - by creation order if start and end dates are the same
+        not allowing phases with duplicate names, even if they have different timeframes"""
 
         if not isinstance(ph, (Phase)):
             raise TypeError("Objective phase should be a Phase")
@@ -85,7 +89,18 @@ class Objective(Achievable):
         if ph.name in self.get_phases_names():
             raise ValueError("Objective phases must have unique names")
         else: 
-            self._phases.append(ph)
+            counter = 0
+            for phase in self.phases:
+                if ph.timeframe.start > phase.timeframe.start:
+                    counter += 1
+                elif ph.timeframe.start == phase.timeframe.start:
+                    if ph.timeframe.end >= phase.timeframe.end:
+                        counter += 1
+                    else:
+                        break
+                else:
+                    break
+            self._phases.insert(counter, ph)
 
     def delete_phase(self, cat):
         if cat in self._phases:
