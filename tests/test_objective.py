@@ -1,6 +1,6 @@
 import pytest
 from models.objective import Objective
-from models.actionables import Goal, Task
+from models.actionables import Goal
 from models.category import Category
 from models.dates import *
 
@@ -20,8 +20,8 @@ p_2 = Phase("5", d3, d2)
 p_6 = Phase("6", d6, d6)
 g = Goal("test goal", c, "test description", p)
 dupe_g = Goal("test goal", c, "test description", p)
-t = Task("test task", c, d3)
-dupe_t = Task("test goal", c, d3)
+g2 = Goal("2", c, "test description", p)
+g3 = Goal("test goal", c, "different phase", p_1)
 
 @pytest.fixture
 def obj():
@@ -34,7 +34,7 @@ def test_constructor(obj):
     assert obj.timeframe.end == d2
     assert obj.categories == []
     assert obj.phases == []
-    assert obj.actionables == []
+    assert obj.goals == []
 
 def test_constructor_same_dates():
     same_date_obj = Objective("test objective", d1, d1)
@@ -44,7 +44,7 @@ def test_constructor_same_dates():
     assert same_date_obj.timeframe.end == d1
     assert same_date_obj.categories == []
     assert same_date_obj.phases == []
-    assert same_date_obj.actionables == []
+    assert same_date_obj.goals == []
 
 def test_constructor_typeerror():
     with pytest.raises(TypeError) as excinfo:  
@@ -158,39 +158,39 @@ def test_delete_phase(obj):
     obj.delete_phase(p)
     assert obj.get_phases_names() == []
 
-def test_add_actionable(obj):
-    obj.add_actionable(g)
-    assert obj.get_actionables_names_and_types() == ["Goal: test goal"]
-    obj.add_actionable(t)
-    assert obj.get_actionables_names_and_types() == ["Goal: test goal", "Task: test task"]
+def test_add_goal(obj):
+    obj.add_goal(g)
+    assert obj.get_goals_names() == ["test goal"]
+    obj.add_goal(g2)
+    assert obj.get_goals_names() == ["test goal", "2"]
 
-def test_add_actionable_duplicate_object(obj):
-    obj.add_actionable(g)
-    obj.add_actionable(g)
-    assert obj.get_actionables_names_and_types() == ["Goal: test goal"]
+def test_add_goal_duplicate_object(obj):
+    obj.add_goal(g)
+    obj.add_goal(g)
+    assert obj.get_goals_names() == ["test goal"]
 
-def test_add_actionable_duplicate_diff_object(obj):
-    obj.add_actionable(g)
-    obj.add_actionable(dupe_t)
-    obj.add_actionable(dupe_g)
-    assert obj.get_actionables_names_and_types() == ["Goal: test goal", "Task: test goal", "Goal: test goal"]
+def test_add_goal_duplicate_diff_object(obj):
+    obj.add_goal(g)
+    obj.add_goal(g3)
+    obj.add_goal(dupe_g)
+    assert obj.get_goals_names() == ["test goal", "test goal", "test goal"]
 
-def test_add_actionable_typeerror(obj):    
+def test_add_goal_typeerror(obj):    
     with pytest.raises(TypeError) as excinfo:  
-        obj.add_actionable("string")
-    assert str(excinfo.value) == "Objective actionable should be a Goal or Task"
+        obj.add_goal("string")
+    assert str(excinfo.value) == "Objective goal should be a Goal"
 
-def test_remove_actionable(obj):
-    obj.add_actionable(g)
-    obj.remove_actionable(g)
-    assert obj.get_actionables_names_and_types() == []
+def test_remove_goal(obj):
+    obj.add_goal(g)
+    obj.remove_goal(g)
+    assert obj.get_goals_names() == []
 
-def test_remove_actionable_nonexistent(obj):
-    obj.add_actionable(g)
-    obj.remove_actionable(t)
-    assert obj.get_actionables_names_and_types() == ["Goal: test goal"]
+def test_remove_goal_nonexistent(obj):
+    obj.add_goal(g)
+    obj.remove_goal(g2)
+    assert obj.get_goals_names() == ["test goal"]
 
-def test_remove_actionable_duplicate_object(obj):
-    obj.add_actionable(g)
-    obj.remove_actionable(dupe_g)
-    assert obj.get_actionables_names_and_types() == ["Goal: test goal"]
+def test_remove_goal_duplicate_object(obj):
+    obj.add_goal(g)
+    obj.remove_goal(dupe_g)
+    assert obj.get_goals_names() == ["test goal"]

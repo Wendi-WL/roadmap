@@ -1,18 +1,18 @@
 from models.dates import date, Timeframe, Phase
 from models.category import Category
 from models.achievable import Achievable
-from models.actionables import Actionable, Goal, Task
+from models.actionables import Goal
 
 class Objective(Achievable):
     """Concrete implementation of Achievable class: Objective with a description, progress out of 10, and timeframe
     
-    Contains three lists of types Category, Phase, and Actionable, to store such objects related to the Objective
+    Contains three lists of types Category, Phase, and Goal, to store such objects related to the Objective
     """
 
     _timeframe : Timeframe
     _categories : list[Category]
     _phases : list[Phase]
-    _actionables : list[Actionable]
+    _goals : list[Goal]
     
     def __init__(self, description, tf_start, tf_end):
         super().__init__(description)
@@ -21,7 +21,7 @@ class Objective(Achievable):
         self._timeframe = Timeframe(tf_start, tf_end) 
         self._categories = []
         self._phases = []
-        self._actionables = []
+        self._goals = []
     
     @property
     def timeframe(self):
@@ -42,8 +42,8 @@ class Objective(Achievable):
         return self._phases
     
     @property
-    def actionables(self):
-        return self._actionables
+    def goals(self):
+        return self._goals
     
     def get_categories_names(self):
         """Returns a list of strings that provide the names of the Categories of the Objective"""
@@ -106,23 +106,20 @@ class Objective(Achievable):
         if cat in self._phases:
             self._phases.remove(cat)
     
-    def get_actionables_names_and_types(self):
-        acts_list = []
-        for act in self._actionables:
-            if isinstance(act, (Goal)):
-                acts_list.append("Goal: " + act.name)
-            elif isinstance(act, (Task)):
-                acts_list.append("Task: " + act.name)
-        return acts_list
+    def get_goals_names(self):
+        goals_list = []
+        for goal in self._goals:
+            goals_list.append(goal.name)
+        return goals_list
 
-    def add_actionable(self, act):
-        """Adds an actionable to the list, allowing different objects with duplicate names and types"""
+    def add_goal(self, goal):
+        """Adds a goal to the list, allowing different objects with duplicate names"""
 
-        if not isinstance(act, (Actionable)):
-            raise TypeError("Objective actionable should be a Goal or Task")
-        if act not in self._actionables:
-            self._actionables.append(act) 
+        if not isinstance(goal, (Goal)):
+            raise TypeError("Objective goal should be a Goal")
+        if goal not in self._goals:
+            self._goals.append(goal) 
 
-    def remove_actionable(self, act):
-        if act in self._actionables:
-            self._actionables.remove(act)
+    def remove_goal(self, goal):
+        if goal in self._goals:
+            self._goals.remove(goal)
